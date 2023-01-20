@@ -1,0 +1,40 @@
+
+<center>
+    <h3>Report Sewer Incident</h3>
+<hr>
+<div class = "form-group">
+
+<form action="" method=POST>
+    {% csrf_token %}
+    {{ form.as_p }}
+
+
+<div class= 'form-row'>
+  <div class 'form-group col'>
+  </div>
+
+</div>
+
+<input type="button" value="Get Location" onclick="getLocation()">
+
+<br>
+<input type="submit" submit="submit" class="btn btn-secondary">
+
+</div>
+</form>
+</center>
+
+<script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+    
+    function showPosition(position) {
+      document.getElementById("id_latitude").value = position.coords.latitude;
+      document.getElementById("id_longitude").value = position.coords.longitude;
+    }
+  </script>
