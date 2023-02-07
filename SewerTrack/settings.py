@@ -17,6 +17,18 @@ from pathlib import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+#ENABLE GDAL AND GEOS LIBRARIES
+GDAL_LIBRARY_PATH = r"C:\Users\Admin\New\Sewer_Project\venv\Lib\site-packages\osgeo\gdal304.dll"
+GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
+
+
+#Create google map API key variable
+GOOGLE_MAP_API_KEY = "AIzaSyAy2tRm5LuWn2VQUX06_k38vmls66DoE0c"
+
+MAP_WIDGETS = {
+    "GOOGLE_MAP_API_KEY" : "AIzaSyAy2tRm5LuWn2VQUX06_k38vmls66DoE0c"
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
@@ -40,9 +52,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Repo',
     'SewerTrack',
+    'django.contrib.gis',
+    "phonenumber_field",
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
