@@ -17,17 +17,12 @@ from pathlib import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+
 #ENABLE GDAL AND GEOS LIBRARIES
 GDAL_LIBRARY_PATH = r"C:\Users\Admin\New\Sewer_Project\venv\Lib\site-packages\osgeo\gdal304.dll"
 GEOS_LIBRARY_PATH = r"C:\OSGeo4W\bin\geos_c.dll"
 
 
-#Create google map API key variable
-GOOGLE_MAP_API_KEY = "AIzaSyAy2tRm5LuWn2VQUX06_k38vmls66DoE0c"
-
-MAP_WIDGETS = {
-    "GOOGLE_MAP_API_KEY" : "AIzaSyAy2tRm5LuWn2VQUX06_k38vmls66DoE0c"
-}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -52,15 +47,28 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Repo',
     'SewerTrack',
+    'geopy',
+    'folium',
     'django.contrib.gis',
     "phonenumber_field",
+    'django_bootstrap5',
+    'bootstrap5',
+    'mapwidgets',
+    'location_field.apps.DefaultConfig',
+    'rest_framework',
+    'mapbox_location_field'
+    
 
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
-
-
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,8 +106,8 @@ WSGI_APPLICATION = 'SewerTrack.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Sewer_RepoTrack',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'Sewer_Repo_Track_2',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -142,9 +150,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+MAPBOX_KEY = 'pk.eyJ1IjoiY2hlZ2VyZSIsImEiOiJjbGR6a2dhazYwdHJ1M29wNnBxbHJ1bm5rIn0.qIMl6ZY2s7PlUi5J2icKvQ'
+
+MAP_WIDGETS = {
+    "MapboxPointFieldWidget" : {
+        "access_token" : MAPBOX_KEY,
+        "markerFitZoom" : 12,
+        "mapOptions" : {
+            "animate" : True,
+            "zoom" : 10,
+            "center" : (-1.282745, 	36.752321),
+            "style" : "mapbox://styles/mapbox/streets-v11",
+        },
+        "geocoderOptions": {
+            "zoom" : 10
+        }
+    }
+}

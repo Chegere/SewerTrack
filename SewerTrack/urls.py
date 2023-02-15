@@ -20,4 +20,5 @@ from Repo import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Repo.urls')), 
+    path('', include('Repo.urls')),
 ]

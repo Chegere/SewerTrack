@@ -1,7 +1,8 @@
 from django.db import models
 import psycopg2
-from django.contrib.gis.db import models
-
+from django.contrib.gis.db import models 
+from django.contrib.gis.db import models as gis_models
+import PIL
 
 
 # Create your models here.
@@ -23,9 +24,9 @@ class Report(models.Model):
     full_name = models.CharField(max_length = 200, null = True)
     phone_number = models.CharField(help_text='Enter your Phone number', max_length=10)
     type_of_incident = models.CharField(max_length = 100,choices = Incident_Type)
-    images = models.ImageField()
+    images = models.ImageField(null=True)
     description = models.TextField(blank = True)
-    location = models.PointField()
+    location = gis_models.PointField(srid=4326, verbose_name=('location'), null=True, blank=True)
 
     def __str__(self):
         return self.full_name
