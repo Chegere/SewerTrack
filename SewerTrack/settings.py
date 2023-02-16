@@ -152,26 +152,28 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+GOOGLE_MAP_API_KEY = 'AIzaSyDbkL14BUIdpTXGCqhYQxWlyk_JvFLLlgw'
 MAPBOX_KEY = 'pk.eyJ1IjoiY2hlZ2VyZSIsImEiOiJjbGR6a2dhazYwdHJ1M29wNnBxbHJ1bm5rIn0.qIMl6ZY2s7PlUi5J2icKvQ'
 
 MAP_WIDGETS = {
-    "MapboxPointFieldWidget" : {
-        "access_token" : MAPBOX_KEY,
-        "markerFitZoom" : 12,
-        "mapOptions" : {
-            "animate" : True,
-            "zoom" : 10,
-            "center" : (-1.282745, 	36.752321),
-            "style" : "mapbox://styles/mapbox/streets-v11",
-        },
-        "geocoderOptions": {
-            "zoom" : 10
-        }
-    }
+    "GooglePointFieldWidget": (
+        ("zoom", 12),
+        ("mapCenterLocationName", "nairobi"),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'kenya'}}),
+        ("markerFitZoom", 12),
+        ("scrollWheel", False),
+        ("streetViewControl", True),
+    ),
+    "GOOGLE_MAP_API_KEY": 'AIzaSyDbkL14BUIdpTXGCqhYQxWlyk_JvFLLlgw'
+    
 }

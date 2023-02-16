@@ -24,9 +24,9 @@ class Report(models.Model):
     full_name = models.CharField(max_length = 200, null = True)
     phone_number = models.CharField(help_text='Enter your Phone number', max_length=10)
     type_of_incident = models.CharField(max_length = 100,choices = Incident_Type)
-    images = models.ImageField(null=True)
+    images = models.FileField(upload_to= 'files/',null=True)
     description = models.TextField(blank = True)
-    location = gis_models.PointField(srid=4326, verbose_name=('location'), null=True, blank=True)
+    location = gis_models.PointField(geography=False, srid=4326, verbose_name=('location'), null=True,)
 
     def __str__(self):
         return self.full_name

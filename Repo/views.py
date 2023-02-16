@@ -25,9 +25,10 @@ def home(request):
 
 def reporting(request):
     if request.method == 'POST':
-        form = SewerForm(request.POST)
+        form = SewerForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            reporting = form.save(commit=True)
+            return redirect('home')
     else:
         form = SewerForm()
     return render(request, 'reporting.html', {'form': form})
