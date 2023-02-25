@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Repo import views
+from Repo.api import views as Repo_api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Repo.urls')), 
     path('', include('Repo.urls')),
+    path('api/Repo/', Repo_api_views.ReportList.as_view()),
 ]

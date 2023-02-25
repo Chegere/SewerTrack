@@ -3,7 +3,8 @@ import psycopg2
 from django.contrib.gis.db import models 
 from django.contrib.gis.db import models as gis_models
 import PIL
-
+from django.utils import timezone
+import datetime
 
 # Create your models here.
 Incident_Type = [
@@ -26,8 +27,17 @@ class Report(models.Model):
     type_of_incident = models.CharField(max_length = 100,choices = Incident_Type)
     images = models.FileField(upload_to= 'files/',null=True)
     description = models.TextField(blank = True)
-    location = gis_models.PointField(geography=False, srid=4326, verbose_name=('location'), null=True,)
+    location = gis_models.PointField(geography=False,  verbose_name=('location'), null=True,)
+    date_reported = models.DateTimeField(verbose_name='Date Reported', default=timezone.now)
+    date_occurred = models.DateField(default=datetime.date.today)
 
+
+    def __str__(self):
+        return f'Sewer incident reported on {self.date_reported}'
+
+    class Meta:
+        verbose_name_plural = 'Sewer incidents'
+        
     def __str__(self):
         return self.full_name
 

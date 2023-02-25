@@ -1,27 +1,20 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from SewerTrack import settings
 import folium
 from .forms import SewerForm
-from .serializers import ReportSerializer
 from .models import Report
+import googlemaps
 
-# from .forms import LocationForm
 
-# Create your views here.
-Kawangware = [-1.2823, 36.7524]
+# Create your views here
 
 def home(request):
-    #create map object
-    m = folium.Map(location=Kawangware, zoom_start=15)
-    m = m._repr_html_()
-    context = {
-        'm' : m,
-    }
-    return render(request, 'index.html', context)
+    incidents = Report.objects.all()
+    return render(request, 'index.html', {'incidents': incidents})
 
-
-#define your form reporting html
 
 def reporting(request):
     if request.method == 'POST':
@@ -32,6 +25,5 @@ def reporting(request):
     else:
         form = SewerForm()
     return render(request, 'reporting.html', {'form': form})
-
 
 

@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'mapwidgets',
     'location_field.apps.DefaultConfig',
     'rest_framework',
-    'mapbox_location_field'
+    'mapbox_location_field',
+    'googlemaps'
     
 
 ]

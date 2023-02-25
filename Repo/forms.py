@@ -10,10 +10,11 @@ from mapwidgets.widgets import GooglePointFieldWidget
 class SewerForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ('__all__')
+        fields = ['full_name', 'phone_number', 'type_of_incident', 'images', 'description', 'location','date_reported', 'date_occurred']
         widgets = {
             'location': GooglePointFieldWidget,
-            'images' : forms.ClearableFileInput(attrs={'multiple': True})
+            'images' : forms.ClearableFileInput(attrs={'multiple': True}),
+            'date_occurred': forms.DateInput(attrs={'type': 'date'})
         }
 
 
