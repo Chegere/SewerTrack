@@ -14,9 +14,12 @@
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
 
 </head>
-  <body>
+<body class="bg-dark">
+  <div class="container mt-5">
   
 
     <!--Navbar-->
@@ -50,59 +53,47 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-    <div id="mapid" style="height: 300px;"></div>
-    <script>
-      var mymap = L.map('mapid').setView([-1.2823, 36.7524], 13);
-    
-      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={pk.eyJ1IjoiY2hlZ2VyZSIsImEiOiJjbGVpNzU2dTYxNXVzM3FtcTQ0andkZWlzIn0.MJ8aTvS1kK5LYT7i_vX4zA}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken: 'pk.eyJ1IjoiY2hlZ2VyZSIsImEiOiJjbGVpNzU2dTYxNXVzM3FtcTQ0andkZWlzIn0.MJ8aTvS1kK5LYT7i_vX4zA'
-      }).addTo(mymap);
-    
-      {% for item in incidents %}
-        L.marker([{{ item.location.y }}, {{ item.location.x }}]).addTo(mymap).bindPopup("Type of Incident: {{ item.type_of_incident }}<br>Description: {{ item.description }}");
-      {% endfor %}
-    </script>
-    
-  </body>
-</html>
+<div id="mapid" style="height: 300px;"></div>
+<script>
+  const mymap = L.map('mapid').setView([-1.286389, 36.817223], 13);
+  const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(mymap);
+
+  {% for item in incidents %}
+    var marker = L.marker([{{ item.location.y }}, {{ item.location.x }}]).addTo(mymap);
+    marker.bindPopup("Type of Incident: {{ item.type_of_incident }}<br>Description: {{ item.description }}<br>Images: {{ images }}");
+  {% endfor %}
+</script>   
 </head>
 
-<div id="mapid"></div>
-<script>
-  var map = L.map('mapid').setView([-1.2823, 36.7524], 13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-  }).addTo(map);
-</script>
 
 <h4>A Table showing Reported Incidents</h4>
-<table class="table table-sm">
-  <thead class="table-dark">
+<table class="table table-sm table-dark text-white table-bordered">
+  <thead class="table-dark text-white">
     <tr>
       <th>Type of Incident</th>
       <th>Description</th>
       <th>Date Reported</th>
+      <th>Location</th>
+
     </tr>
   </thead>
   <tbody>
-    {% for item in incidents %}
+    {% for item in incidents|slice:":10" %}
       <tr>
         <td>{{ item.type_of_incident }}</td>
         <td>{{ item.description }}</td>
         <td>{{ item.date_reported }}</td>
+        <td>{{ item.location }}</td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
 
 <div style="text-align: center;">
-<div id="faq" style="background-color: darkgrey; padding: 10px; width: 70%;">
+  <div id="faq" style="background-color: darkgrey; padding: 10px; width: 70%; margin: 20px auto;">
   <h5 style="color: white;">Frequently Asked Questions</h5>
   <select>
     <option value="">Select a question...</option>
@@ -141,27 +132,18 @@
   });
 </script>
 
-<footer class="bg-dark pt-2 pb-1 text-white">
+<footer class="bg-dark pt-2 pb-1 text-white text-center" style="margin: 20px;">
   <div class="container">
     <div class="row">
-      <div class="col-sm-6 text-center">
-        <ul class="list-unstyled">
-          <li><a href="/terms-of-service" class="text-white" style="font-size: 14px;">Terms of Service</a></li>
-          <li><a href="/privacy-policy" class="text-white" style="font-size: 14px;">Privacy Policy</a></li>
-          <li><a href="/contact-us" class="text-white" style="font-size: 14px;">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="col-sm-6 text-sm-right">
+      <div class="col-sm-6 text-sm-center text-center">
         <div id="contact-info" style="font-size: 14px;">
           <h6>Contact Information</h6>
-          <ul>
-            <li><strong>Nairobi City Water and Sewerage Company:</strong> NSWSC Water Company</li>
-            <li><strong>Hotline:</strong> +254724253582</li>
-            <li><strong>Email:</strong> info@nairobiwater.co.ke</li>
-            <li><strong>Nairobi City Council:</strong> City of Nairobi</li>
-            <li><strong>Phone:</strong> +254 725 624 489</li>
-            <li><strong>Email:</strong> info@nairobi.go.ke</li>
-          </ul>
+          <p><strong>Nairobi City Water and Sewerage Company:</strong> NSWSC Water Company</p>
+          <p><strong>Hotline:</strong> +254724253582</p>
+          <p><strong>Email:</strong> info@nairobiwater.co.ke</p>
+          <p><strong>Nairobi City Council:</strong> City of Nairobi</p>
+          <p><strong>Phone:</strong> +254 725 624 489</p>
+          <p><strong>Email:</strong> info@nairobi.go.ke</p>
         </div>
         <p style="font-size: 14px;">&copy; 2023 SewerRepoTrack. All rights reserved.</p>
         <p style="font-size: 14px;">Developed by GInfo Solutions</p>
@@ -169,3 +151,8 @@
     </div>
   </div>
 </footer> 
+
+
+</div>
+</body>
+</html>

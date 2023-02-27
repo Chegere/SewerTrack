@@ -57,7 +57,9 @@ INSTALLED_APPS = [
     'location_field.apps.DefaultConfig',
     'rest_framework',
     'mapbox_location_field',
-    'googlemaps'
+    'googlemaps',
+    'psycopg2',
+    'geojson'
     
 
 ]

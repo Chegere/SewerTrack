@@ -8,14 +8,14 @@ import datetime
 
 # Create your models here.
 Incident_Type = [
-    ('SCH','Sewer_Choke'),
-    ('MANC','Manhole_Clog'),
-    ('SPBU','Sewer_Pipe_Burst'),
-    ('SPCL','Sewer_Pipe_Clog'),
-    ('MANB','Manhole_Burst'),
-    ('SPLE','Sewer_Pipe_Leakage'),
-    ('OSF','Open_Sewage_Flowing'),
-    ('OTR', 'Any_Other_Kind'),
+    ('Sewer Choke','Sewer_Choke'),
+    ('Manhole Clog','Manhole_Clog'),
+    ('Sewer Pipe Burst','Sewer_Pipe_Burst'),
+    ('Sewer Pipe Clog','Sewer_Pipe_Clog'),
+    ('Manhole Burst','Manhole_Burst'),
+    ('Sewer Pipe Leakage','Sewer_Pipe_Leakage'),
+    ('Open Sewage Flowing','Open_Sewage_Flowing'),
+    ('Any Other Kind', 'Any_Other_Kind'),
 
 ]
 
@@ -40,4 +40,3 @@ class Report(models.Model):
         
     def __str__(self):
         return self.full_name
-
